@@ -1,5 +1,5 @@
 # StormCount
 
 TODO:  
-shake to reset  
-fix iPad layout  
+-shake to reset  
+-fix iPad layout  
