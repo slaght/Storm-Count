@@ -43,9 +43,16 @@ class ViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return false
     }
+    
+    override var canBecomeFirstResponder: Bool {
+        //get {
+            return true
+        //}
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.becomeFirstResponder()
         stormImage.layer.cornerRadius = 10
         mountainImage.layer.cornerRadius = 10
         islandImage.layer.cornerRadius = 10
@@ -53,6 +60,21 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake && (self.stormCount.text != "0" || self.mountainCount.text != "0" || self.islandCount.text != "0"){
+            let alert = UIAlertController(title: "Clear Count", message: "Are you sure you want to clear the counters?", preferredStyle: .alert)
+            let clearAction = UIAlertAction(title: "Clear", style: .destructive) { (alert: UIAlertAction!) -> Void in
+                self.stormCount.text = "0"
+                self.mountainCount.text = "0"
+                self.islandCount.text = "0"
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default) {(alert: UIAlertAction!) -> Void in}
+            alert.addAction(clearAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion:nil)
+        }
     }
     
     func handle(target: UIView, count: UILabel, up: Bool, gesture: UILongPressGestureRecognizer) {
